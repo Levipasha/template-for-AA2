@@ -1,0 +1,651 @@
+/* ==========================================================================
+   Design System & Variable Declarations
+   ========================================================================== */
+:root {
+  /* Workspace Colors */
+  --bg-workspace: #080b11;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  
+  /* Primary Accents */
+  --accent: #c51d24;
+  --accent-glow: rgba(197, 29, 36, 0.35);
+  
+  /* Poster Colors (Matching original image) */
+  --poster-red: #c51d24;
+  --poster-black: #000000;
+  --poster-white: #ffffff;
+  
+  /* Typography */
+  --font-ui: 'Inter', system-ui, sans-serif;
+  --font-poster: 'Outfit', sans-serif;
+}
+
+/* ==========================================================================
+   Reset & Base Styles
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-workspace);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+html::-webkit-scrollbar, 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Sleek Background Mesh Gradient */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: 
+    radial-gradient(circle at 50% 15%, rgba(197, 29, 36, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 10% 85%, rgba(99, 102, 241, 0.04) 0%, transparent 35%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Workspace Centering Layout
+   ========================================================================== */
+.workspace-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+/* Header */
+.app-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.app-title {
+  font-family: var(--font-poster);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  background: linear-gradient(120deg, #ffffff 60%, #e0e0e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.25rem;
+}
+
+.app-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   Poster Preview Mockup
+   ========================================================================== */
+.poster-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  animation: scaleUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.poster-border-highlight {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+.poster-frame {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 
+    0 30px 60px -15px rgba(0, 0, 0, 0.8),
+    0 0 50px rgba(197, 29, 36, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.poster-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* Poster Sections */
+.poster-section {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.poster-section.sec-art {
+  background-color: var(--poster-red);
+}
+
+.poster-section.sec-artist {
+  background-color: var(--poster-black);
+}
+
+.poster-section.sec-tools {
+  background-color: var(--poster-white);
+}
+
+/* Empty section outline indicators (Inner dashed box, no upload text) */
+.poster-section.empty {
+  outline-width: 2px;
+  outline-style: dashed;
+  outline-offset: -12px;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.sec-art.empty,
+.sec-artist.empty {
+  outline-color: rgba(255, 255, 255, 0.22);
+}
+
+.sec-tools.empty {
+  outline-color: rgba(0, 0, 0, 0.12);
+}
+
+/* Outline highlights on hover */
+.sec-art.empty:hover,
+.sec-artist.empty:hover {
+  outline-color: rgba(255, 255, 255, 0.55);
+}
+
+.sec-tools.empty:hover {
+  outline-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Hover glow/tint */
+.poster-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.03);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.sec-tools::after {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.poster-section:hover::after {
+  opacity: 1;
+}
+
+/* Uploaded Image */
+.section-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+  animation: zoomInImage 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Subtle overlay on images for readability */
+.section-overlay-subtle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.15;
+}
+
+.sec-art .section-overlay-subtle {
+  background-color: var(--poster-red);
+}
+
+.sec-artist .section-overlay-subtle {
+  background-color: var(--poster-black);
+}
+
+.sec-tools .section-overlay-subtle {
+  background-color: var(--poster-white);
+}
+
+/* Section Main Text */
+.section-text {
+  font-family: var(--font-poster);
+  font-size: clamp(2.8rem, 7vw, 4.2rem);
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  text-align: center;
+  z-index: 3;
+  user-select: none;
+  pointer-events: none;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sec-art .section-text,
+.sec-artist .section-text {
+  color: #ffffff;
+}
+
+.sec-tools .section-text {
+  color: #000000;
+  text-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.poster-section:hover .section-text {
+  transform: scale(1.03);
+}
+
+/* Floating Watermark */
+.poster-watermark {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 2rem;
+  font-family: var(--font-poster);
+  font-size: clamp(1.1rem, 3.5vw, 1.6rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: none;
+}
+
+.watermark-red {
+  color: var(--poster-red);
+}
+
+.watermark-dark {
+  color: #000000;
+}
+
+
+
+/* ==========================================================================
+   Download Premium Action Button
+   ========================================================================= */
+.actions-container {
+  margin-top: 2.2rem;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  justify-content: center;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.download-btn-premium {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--poster-red) 0%, #a8171d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #ffffff;
+  cursor: pointer;
+  box-shadow: 
+    0 10px 25px -5px var(--accent-glow),
+    0 4px 10px -3px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.download-btn-premium:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 15px 30px -5px var(--accent-glow),
+    0 6px 15px -3px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(135deg, #d6222b 0%, #be1e25 100%);
+}
+
+.download-btn-premium:active {
+  transform: translateY(0);
+}
+
+.download-btn-premium:disabled {
+  background: var(--text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* ==========================================================================
+   Footer credits
+   ========================================================================== */
+.footer-credits-centered {
+  margin-top: 2.5rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomInImage {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ==========================================================================
+   Crop Modal Styles
+   ========================================================================== */
+.crop-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.25s ease forwards;
+  padding: 1.5rem;
+}
+
+.crop-modal {
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.crop-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.crop-modal-header h2 {
+  font-family: var(--font-poster);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.crop-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.crop-modal-close:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.crop-modal-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+/* Crop Viewport Box (Aspect ratio 9/4 = 2.25) */
+.crop-viewport {
+  width: 100%;
+  aspect-ratio: 9 / 4;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  background: #0d0f14;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
+  user-select: none;
+}
+
+.crop-viewport:active {
+  cursor: grabbing;
+}
+
+.crop-image {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  max-width: none !important;
+}
+
+/* Crop viewport grid lines (Rule of Thirds Overlay) */
+.crop-viewport-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.crop-grid-line {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.crop-grid-line.h-1 { top: 33.33%; left: 0; width: 100%; height: 1px; }
+.crop-grid-line.h-2 { top: 66.66%; left: 0; width: 100%; height: 1px; }
+.crop-grid-line.v-1 { left: 33.33%; top: 0; height: 100%; width: 1px; }
+.crop-grid-line.v-2 { left: 66.66%; top: 0; height: 100%; width: 1px; }
+
+.crop-tip-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Zoom Slider */
+.crop-slider-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.crop-slider-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Customized Range Slider */
+.slider-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.slider-input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Crop Modal Buttons */
+.crop-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--poster-red) 0%, #a8171d 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #d6222b 0%, #be1e25 100%);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
