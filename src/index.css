@@ -309,11 +309,7 @@ body::before {
   color: var(--poster-red);
 }
 
-.watermark-red-at {
-  color: var(--poster-red);
-  display: inline-block;
-  transform: translateY(-0.06em);
-}
+
 
 .watermark-dark {
   color: #000000;

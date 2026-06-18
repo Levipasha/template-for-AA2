@@ -283,19 +283,16 @@ export default function App() {
       const rightMargin = 70;
       const bottomMargin = height - 55;
 
-      const suffixText = '.in';
-      const brandText = 'ArtArtist';
-      const atText = '@';
+      const suffixText = 'tools';
+      const prefixText = '#artartist';
       
       const suffixWidth = ctx.measureText(suffixText).width;
-      const brandWidth = ctx.measureText(brandText).width;
 
       ctx.fillStyle = '#000000';
       ctx.fillText(suffixText, width - rightMargin, bottomMargin);
 
       ctx.fillStyle = sections.art.defaultBgColor;
-      ctx.fillText(brandText, width - rightMargin - suffixWidth, bottomMargin);
-      ctx.fillText(atText, width - rightMargin - suffixWidth - brandWidth, bottomMargin - Math.round(watermarkSize * 0.06));
+      ctx.fillText(prefixText, width - rightMargin - suffixWidth, bottomMargin);
 
       ctx.restore();
 
@@ -389,9 +386,8 @@ export default function App() {
 
               {/* Watermark Logo */}
               <div className="poster-watermark">
-                <span className="watermark-red-at">@</span>
-                <span className="watermark-red">ArtArtist</span>
-                <span className="watermark-dark">.in</span>
+                <span className="watermark-red">#artartist</span>
+                <span className="watermark-dark">tools</span>
               </div>
             </div>
 
