@@ -284,7 +284,7 @@ export default function App() {
       const bottomMargin = height - 55;
 
       const suffixText = '.in';
-      const prefixText = 'ArtArtist';
+      const prefixText = '#ArtArtist';
       
       const suffixWidth = ctx.measureText(suffixText).width;
 
@@ -386,7 +386,7 @@ export default function App() {
 
               {/* Watermark Logo */}
               <div className="poster-watermark">
-                <span className="watermark-red">ArtArtist</span>
+                <span className="watermark-red">#ArtArtist</span>
                 <span className="watermark-dark">.in</span>
               </div>
             </div>
